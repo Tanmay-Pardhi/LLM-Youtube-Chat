@@ -7,7 +7,7 @@ Resources:
     Type: AWS::Amplify::App
     Properties:
       Name: amplify-chatytt-client
-      Repository: https://github.com/suresha97/ChatYTT
+      Repository: https://github.com/Tanmay-Pardhi/LLM-Youtube-Chat
       AccessToken: '{{resolve:secretsmanager:github-token:SecretString:github-token}}'
       IAMServiceRole: !GetAtt AmplifyRole.Arn
       EnvironmentVariables:

@@ -2,7 +2,11 @@
 name = "chatyt"
 version = "0.1.0"
 description = "Using LLMs for question answering with youtube video transcripts as context."
-authors = ["suresha97 <suresha@tcd.ie>"]
+authors = ["tanmay-pardhi <tpardhi@ucsd.edu>"]
+
+packages = [
+    { include = "chatyt" }
+]
 
 [tool.poetry.dependencies]
 python = "^3.9"

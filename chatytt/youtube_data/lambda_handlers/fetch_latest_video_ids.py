@@ -23,7 +23,7 @@ def lambda_handler(event, context):
 
     save_json_to_s3(
         video_ids,
-        bucket="chatyt-youtube-data",
+        bucket="chatyt-youtube-data-ytllm",
         key=f"video-ids/"
         f"{os.environ.get('PLAYLIST_NAME')}-video-ids/"
         f"{int(time.time())}/"

@@ -19,7 +19,6 @@ def get_most_recent_video_id_collection_timestamp():
         filter_prefix_dir=f"video-ids/" f"{os.environ.get('PLAYLIST_NAME')}-video-ids/",
     )
     max_timestamp_key = max([int(timestamp_key) for timestamp_key in video_id_keys])
-
     return max_timestamp_key
 
 
@@ -60,6 +59,7 @@ def lambda_handler(event, context):
         f"{max_timestamp_key}"
         f"/video_ids.json",
     )["video_ids"]
+    print(latest_video_ids)
 
     transcript_fetcher = TranscriptFetcher(
         formatting_method=transcript_conf["formatting_method"]
@@ -67,6 +67,7 @@ def lambda_handler(event, context):
     transcripts = transcript_fetcher.get_batch_formatted_video_transcripts(
         latest_video_ids
     )
+    print(transcripts)
 
     store_latest_transcripts(
         transcripts, video_id_retrieval_timestamp=max_timestamp_key

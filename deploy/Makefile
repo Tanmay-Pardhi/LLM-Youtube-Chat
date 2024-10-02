@@ -1,5 +1,5 @@
 build-code-uri:
-	bash build_code_uri.sh
+	call build_code_uri.bat
 
 deploy-workflows-stack: build-code-uri
 	cd chatytt-workflows && \

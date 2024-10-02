@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "chatyt"
+name = "chatytt"
 version = "0.1.0"
 description = "Using LLMs for question answering with youtube video transcripts as context."
 authors = ["tanmay-pardhi <tpardhi@ucsd.edu>"]

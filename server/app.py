@@ -2,6 +2,9 @@ from dotenv import load_dotenv
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 
+from langchain_pinecone import PineconeVectorStore
+from langchain_openai import OpenAIEmbeddings
+
 from chatytt.chains.standard import ConversationalQAChain
 from chatytt.vector_store.pinecone_db import PineconeDB
 from server.utils.chat import parse_chat_history
@@ -17,8 +20,9 @@ load_dotenv()
 app = Flask(__name__)
 CORS(app)
 
-pinecone_db = PineconeDB(index_name="youtube-transcripts", embedding_source="open-ai")
-chain = ConversationalQAChain(vector_store=pinecone_db.vector_store)
+embeddings = OpenAIEmbeddings()
+vector_store = PineconeVectorStore(index_name="youtube-transcripts", embedding=embeddings)
+chain = ConversationalQAChain(vector_store=vector_store)
 
 
 @app.route("/get-query-response/", methods=["POST"])

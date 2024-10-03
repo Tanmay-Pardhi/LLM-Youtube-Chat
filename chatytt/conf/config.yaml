@@ -1,7 +1,7 @@
 youtube_data:
   video:
     playlist_id: PL22egh3ok4cOaKRqIt6LwBRXcyiVcS5k2
-    latest_video_lookback_delta_days: 343
+    latest_video_lookback_delta_days: 1460
   transcript:
     formatting_method: text
 

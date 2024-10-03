@@ -1,0 +1,17 @@
+youtube-data-api==0.0.21
+python-dotenv==1.0.0
+pydantic==2.4.2
+youtube-transcript-api==0.6.1
+boto3==1.28.73
+langchain==0.0.334
+tiktoken==0.5.1
+cohere==4.34
+openai==1.2.3
+pinecone-client==2.2.4
+unstructured==0.10.30
+pyyaml==6.0.1
+flask-cors==4.0.0
+urllib3
+werkzeug==2.0.3
+aws-wsgi==0.2.7
+langchain-core==0.1.3

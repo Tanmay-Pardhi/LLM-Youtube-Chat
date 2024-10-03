@@ -1,13 +1,16 @@
 from typing import Optional, List
 
 from dotenv import load_dotenv
-from langchain.chat_models import ChatOpenAI
+from  langchain_openai import ChatOpenAI
 from langchain.chains import ConversationalRetrievalChain
 from langchain.schema.vectorstore import VectorStore
 
 from chatytt.conf.config import load_config
 from chatytt.chains.base_chain import BaseChatChain
 from chatytt.vector_store.pinecone_db import PineconeDB
+
+from langchain_pinecone import PineconeVectorStore
+from langchain_openai import OpenAIEmbeddings
 
 chain_conf = load_config()["chains"]
 
@@ -23,13 +26,15 @@ class ConversationalQAChain(BaseChatChain):
         self.model_name = model_name if model_name else chain_conf["model_name"]
         self.temperature = temperature
         self.llm = ChatOpenAI()
-        self.vector_store = vector_store
+        self.embeddings = OpenAIEmbeddings()
+        self.vector_store = PineconeVectorStore(index_name="youtube-transcripts", embedding=embeddings)
+        # self.vector_store = vector_store
         self.chain = ConversationalRetrievalChain.from_llm(
             llm=self.llm, retriever=self.get_retriever()
         )
 
     def get_response(self, query: str, chat_history: List[tuple[str, str]]):
-        return self.chain({"question": query, "chat_history": chat_history})["answer"]
+        return self.chain.invoke({"question": query, "chat_history": chat_history})["answer"]
 
     def get_retriever(self):
         return self.vector_store.as_retriever()
@@ -37,10 +42,11 @@ class ConversationalQAChain(BaseChatChain):
 
 if __name__ == "__main__":
     load_dotenv()
-
-    pinecone_db = PineconeDB(
-        index_name="youtube-transcripts", embedding_source="open-ai"
-    )
+    embeddings = OpenAIEmbeddings()
+    vectorstore = PineconeVectorStore(index_name="youtube-transcripts", embedding=embeddings)
+    # pinecone_db = PineconeDB(
+    #     index_name="youtube-transcripts", embedding_source="open-ai"
+    # )
 
     query = (
         "Is buying a house a good financial decision to make in your 20s ? Give details on the "
@@ -50,8 +56,9 @@ if __name__ == "__main__":
     chat_history: List[tuple[str, str]] = []
 
     conversational_qa_chain = ConversationalQAChain(
-        vector_store=pinecone_db.vector_store
+        vector_store=vectorstore
     )
+    print("Chain created")
     response = conversational_qa_chain.get_response(
         query=query, chat_history=chat_history
     )

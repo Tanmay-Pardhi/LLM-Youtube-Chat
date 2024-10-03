@@ -27,7 +27,7 @@ class ConversationalQAChain(BaseChatChain):
         self.temperature = temperature
         self.llm = ChatOpenAI()
         self.embeddings = OpenAIEmbeddings()
-        self.vector_store = PineconeVectorStore(index_name="youtube-transcripts", embedding=embeddings)
+        self.vector_store = PineconeVectorStore(index_name="youtube-transcripts", embedding=self.embeddings)
         # self.vector_store = vector_store
         self.chain = ConversationalRetrievalChain.from_llm(
             llm=self.llm, retriever=self.get_retriever()

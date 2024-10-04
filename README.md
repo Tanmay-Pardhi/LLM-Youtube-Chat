@@ -1,4 +1,4 @@
-# ChatYTT
+# RAG_Video
 
 An application which allows users to leverage LLMs to retrieve natural language responses to questions about the contents of
 Youtube Videos e.g. asking questions on what was discussed in long form content like podcasts. It does so, using
